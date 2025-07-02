@@ -1,38 +1,47 @@
+import com.github.javafaker.Faker;
+import com.github.javafaker.PhoneNumber;
 import org.junit.jupiter.api.Test;
 import pages.PracticeFormPage;
 
 
 public class PracticeFormTests extends TestBase {
     PracticeFormPage practiceForm = new PracticeFormPage();
+    Faker faker = new Faker();
+
+    String firstName = faker.name().firstName();
+    String lastName = faker.name().lastName();
+    String email = faker.internet().emailAddress();
+    String phoneNumber = faker.numerify("##########");
+    String streetAddress = faker.address().streetAddress();
 
     @Test
     void fillPracticeFormTest() {
         practiceForm.openPage()
-                    .setFirstName("Alex")
-                    .setLastName("Potapov")
-                    .setEmail("alex@ya.ru")
+                    .setFirstName(firstName)
+                    .setLastName(lastName)
+                    .setEmail(email)
                     .setGender("Other")
-                    .setPhoneNumber("8800345645")
+                    .setPhoneNumber(phoneNumber)
                     .setDateOfBirth("08", "September", "1912")
                     .setSubject("Maths")
                     .setSubject("Hindi")
                     .setHobby("Reading")
                     .setHobby("Music")
                     .setPicture("Ob1aUY2U.jpeg")
-                    .setAddress("123409, Russia, Moscow")
+                    .setAddress(streetAddress)
                     .setState("Rajasthan")
                     .setCity("Jaipur")
                     .submitForm()
                     .checkModalIsOpen()
-                    .checkResult("Student Name", "Alex Potapov")
-                    .checkResult("Student Email", "alex@ya.ru")
+                    .checkResult("Student Name", firstName + " " + lastName)
+                    .checkResult("Student Email", email)
                     .checkResult("Gender", "Other")
-                    .checkResult("Mobile", "8800345645")
+                    .checkResult("Mobile", phoneNumber)
                     .checkResult("Date of Birth", "08 September,1912")
                     .checkResult("Subjects", "Maths, Hindi")
                     .checkResult("Hobbies", "Reading, Music")
                     .checkResult("Picture", "Ob1aUY2U.jpeg")
-                    .checkResult("Address", "123409, Russia, Moscow")
+                    .checkResult("Address", streetAddress)
                     .checkResult("State and City", "Rajasthan Jaipur")
                     .closeModal();
     }
@@ -40,15 +49,15 @@ public class PracticeFormTests extends TestBase {
     @Test
     void fillNecessaryOnlyPracticeFormTest() {
         practiceForm.openPage()
-                .setFirstName("Eugene")
-                .setLastName("White")
+                .setFirstName(firstName)
+                .setLastName(lastName)
                 .setGender("Male")
-                .setPhoneNumber("8800345645")
+                .setPhoneNumber(phoneNumber)
                 .submitForm()
                 .checkModalIsOpen()
-                .checkResult("Student Name", "Eugene White")
+                .checkResult("Student Name", firstName + " " + lastName)
                 .checkResult("Gender", "Male")
-                .checkResult("Mobile", "8800345645")
+                .checkResult("Mobile", phoneNumber)
                 .closeModal();
     }
 

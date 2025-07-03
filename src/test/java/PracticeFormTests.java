@@ -1,18 +1,12 @@
-import com.github.javafaker.Faker;
-import com.github.javafaker.PhoneNumber;
 import org.junit.jupiter.api.Test;
 import pages.PracticeFormPage;
+
+import static data.TestData.*;
 
 
 public class PracticeFormTests extends TestBase {
     PracticeFormPage practiceForm = new PracticeFormPage();
-    Faker faker = new Faker();
 
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String email = faker.internet().emailAddress();
-    String phoneNumber = faker.numerify("##########");
-    String streetAddress = faker.address().streetAddress();
 
     @Test
     void fillPracticeFormTest() {
@@ -20,29 +14,27 @@ public class PracticeFormTests extends TestBase {
                     .setFirstName(firstName)
                     .setLastName(lastName)
                     .setEmail(email)
-                    .setGender("Other")
+                    .setGender(gender)
                     .setPhoneNumber(phoneNumber)
-                    .setDateOfBirth("08", "September", "1912")
-                    .setSubject("Maths")
-                    .setSubject("Hindi")
-                    .setHobby("Reading")
-                    .setHobby("Music")
-                    .setPicture("Ob1aUY2U.jpeg")
+                    .setDateOfBirth(day, month, year)
+                    .setSubject(subject)
+                    .setHobby(hobby)
+                    .setPicture(avatar)
                     .setAddress(streetAddress)
-                    .setState("Rajasthan")
-                    .setCity("Jaipur")
+                    .setState(state)
+                    .setCity(city)
                     .submitForm()
                     .checkModalIsOpen()
                     .checkResult("Student Name", firstName + " " + lastName)
                     .checkResult("Student Email", email)
-                    .checkResult("Gender", "Other")
+                    .checkResult("Gender", gender)
                     .checkResult("Mobile", phoneNumber)
-                    .checkResult("Date of Birth", "08 September,1912")
-                    .checkResult("Subjects", "Maths, Hindi")
-                    .checkResult("Hobbies", "Reading, Music")
-                    .checkResult("Picture", "Ob1aUY2U.jpeg")
+                    .checkResult("Date of Birth", day + " " + month + "," + year)
+                    .checkResult("Subjects", subject)
+                    .checkResult("Hobbies", hobby)
+                    .checkResult("Picture", avatar)
                     .checkResult("Address", streetAddress)
-                    .checkResult("State and City", "Rajasthan Jaipur")
+                    .checkResult("State and City", state + " " + city)
                     .closeModal();
     }
 
@@ -51,12 +43,12 @@ public class PracticeFormTests extends TestBase {
         practiceForm.openPage()
                 .setFirstName(firstName)
                 .setLastName(lastName)
-                .setGender("Male")
+                .setGender(gender)
                 .setPhoneNumber(phoneNumber)
                 .submitForm()
                 .checkModalIsOpen()
                 .checkResult("Student Name", firstName + " " + lastName)
-                .checkResult("Gender", "Male")
+                .checkResult("Gender", gender)
                 .checkResult("Mobile", phoneNumber)
                 .closeModal();
     }
